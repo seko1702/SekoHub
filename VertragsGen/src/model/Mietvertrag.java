@@ -29,8 +29,8 @@ public class Mietvertrag {
 	private ArrayList<String> arbeitenVorEinzug;
 	private boolean energieausweis;
 	private boolean richtigkeitEnergieausweisVersichert;
-	private Partei zustaendigGartenpflege;
-	private Partei zustaendigGartengeraete;
+	private String zustaendigGartenpflege;
+	private String zustaendigGartengeraete;
 	private int kaution;
 	private float verteilungHeizUndWarmwasserkosten;
 	private boolean betriebskostenAnteilWohnflaeche;
@@ -181,16 +181,16 @@ public class Mietvertrag {
 	public void setRichtigkeitEnergieausweisVersichert(boolean richtigkeitEnergieausweisVersichert) {
 		this.richtigkeitEnergieausweisVersichert = richtigkeitEnergieausweisVersichert;
 	}
-	public Partei getZustaendigGartenpflege() {
+	public String getZustaendigGartenpflege() {
 		return zustaendigGartenpflege;
 	}
-	public void setZustaendigGartenpflege(Partei zustaendigGartenpflege) {
+	public void setZustaendigGartenpflege(String zustaendigGartenpflege) {
 		this.zustaendigGartenpflege = zustaendigGartenpflege;
 	}
-	public Partei getZustaendigGartengeraete() {
+	public String getZustaendigGartengeraete() {
 		return zustaendigGartengeraete;
 	}
-	public void setZustaendigGartengeraete(Partei zustaendigGartengeraete) {
+	public void setZustaendigGartengeraete(String zustaendigGartengeraete) {
 		this.zustaendigGartengeraete = zustaendigGartengeraete;
 	}
 	public int getKaution() {

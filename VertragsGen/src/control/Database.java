@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
+import model.Fahrzeug;
 import model.JuristischePartei;
 import model.NatuerlichePartei;
 
@@ -27,8 +32,8 @@ public class Database {
 		String vorname = np.getVorname();
 		String personalausweisNr = np.getPersonalausweisNr();
 		String ausstellungsbehoerde = np.getAusstellungsbehoerde();
-		String ausstellungsdatum = np.getAusstellungsdatum();
-		String geburtsdatum = np.getGeburtsdatum();
+		String ausstellungsdatum = dateToString(np.getAusstellungsdatum());
+		String geburtsdatum = dateToString(np.getGeburtsdatum());
 	
 		try {
 			conn = DatabaseCon.connect();
@@ -67,8 +72,8 @@ public class Database {
 			np.setVorname(rs.getString("vorname"));
 			np.setPersonalausweisNr(rs.getString("personalausweisNr"));
 			np.setAusstellungsbehoerde(rs.getString("austellungsbehoerde"));
-			np.setAusstellungsdatum(rs.getString("austellungsdatum"));
-			np.setGeburtsdatum(rs.getString("geburtsdatum"));
+			np.setAusstellungsdatum(stringToDate(rs.getString("austellungsdatum")));
+			np.setGeburtsdatum(stringToDate(rs.getString("geburtsdatum")));
 			
 			System.out.println("download succeeded!");
 			conn.close();
@@ -138,49 +143,6 @@ public static void writeJuristischePartei(JuristischePartei jp) {
 			 System.out.println(e.getMessage());
 			 return null;}
 	}
-
-	public static void writeKfzKaufvertrag(KfzKaufvertrag vertrag) {
-		
-		try {
-			Connection conn = DatabaseCon.connect();
-			Statement sta = conn.createStatement();
-			
-			String sql1 = "insert into KfzKaufvertrag values (null, null, null, null,"+booleanConv(vertrag.isAlleinigesEigentum())+
-					","+booleanConv(vertrag.isAustauschmotor())+","+vertrag.getAustauschmotorLaufleistung()+","+booleanConv(vertrag.isUnfallschaden())+
-					","+booleanConv(vertrag.isUmmeldungUnverzueglich())+
-					","+booleanConv(vertrag.isFahrzeugAbgemeldet())+","+booleanConv(vertrag.isFahrzeugschein())+
-					","+booleanConv(vertrag.isFahrzeugbrief())+","+booleanConv(vertrag.isStillegungsBescheinigung())+","+booleanConv(vertrag.isUntersuchungsbericht())+
-					","+vertrag.getAnzahlSchluessel()+","+vertrag.getKaufpreis()+","+vertrag.getAnzahlung()+")";
-			
-			
-			
-			sta.executeUpdate(sql1);
-			
-			System.out.println("Boom chaka laka");
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-	}
-	
-    public static void writeUnfallschaeden(KfzKaufvertrag vertrag) {
-    	
-    	Connection conn = DatabaseCon.connect();
-    	try {
-			Statement sta = conn.createStatement();
-			String sql2 = "insert into Unfallschaeden values (null, "
-					+ "(SELECT seq FROM sqlite_sequence WHERE name = KfzKaufvertrag),"+vertrag.getBezeichnung()+")";
-			sta.executeUpdate(sql2);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			 
-		}
-	}
 	
 	//Loescht eine Partei aus der Datenbank
 	public static void deletePartei(int id) {
@@ -198,21 +160,101 @@ public static void writeJuristischePartei(JuristischePartei jp) {
 		catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
-    	
-    	
-    	
-    	
     }
+	
+	public static void writeFahrzeug(Fahrzeug fz){
+		String typ = fz.getTyp();
+		String marke = fz.getMarke();
+		String modell = fz.getModell();
+		int fahrzeugIdNr = fz.getFahrzeugIdNr();
+		int fahrzeugbriefNr = fz.getFahrzeugbriefNr();
+		int gesamtfahrleistung = fz.getGesamtFahrLeistung();
+		int ps = fz.getPs();
+		int hubraum = fz.getHubraum();
+		String naechstHauptuntersuchung = dateToString(fz.getNaechsteHauptuntersuchung());
+		String co2Effizienz = fz.getCoZweiEffizienz();
+		String amtlichesKennzeichen = fz.getAmtlichesKennzeichen();
+		String erstzulassung = dateToString(fz.getErstzulassung());
+		ArrayList<String> zusatzAusstattung = fz.getZusatzAusstattung();
+		int vorbesitzer = fz.getAnzahlVorbesitzer();
+		int gewerblicheNutzung = booleanConv(fz.isGewerbNutzung());
+		
+		
+		try {
+			conn = DatabaseCon.connect();
+			Statement sta = conn.createStatement();
+			
+			String query1 = "insert into Fahrzeug values (null, '"+ typ +"', '"+ marke +"', '"+ modell +"', "+ fahrzeugIdNr +", "+ fahrzeugbriefNr +", "+ gesamtfahrleistung +", "+ ps +", "+ hubraum +", '"+ naechstHauptuntersuchung +"', '"+ co2Effizienz +"', '"+ amtlichesKennzeichen +"', '"+ erstzulassung +"', "+ vorbesitzer +", "+ gewerblicheNutzung +")";
+			sta.executeUpdate(query1);
+			
+			String query2 = "select seq from sqlite_sequence where name = 'Fahrzeug'";		
+			System.out.println("upload succeeded!");
+			conn.close();
+		}
+		catch(SQLException e) {
+			 System.out.println(e.getMessage());
+		}
+	}
 
+	public static void writeKfzKaufvertrag(KfzKaufvertrag vertrag) {
+		
+		try {
+			Connection conn = DatabaseCon.connect();
+			Statement sta = conn.createStatement();
+			
+			String sql1 = "insert into KfzKaufvertrag values (null, null, null, null,"+booleanConv(vertrag.isAlleinigesEigentum())+
+					","+booleanConv(vertrag.isAustauschmotor())+","+vertrag.getAustauschmotorLaufleistung()+","+booleanConv(vertrag.isUnfallschaden())+
+					","+booleanConv(vertrag.isUmmeldungUnverzueglich())+
+					","+booleanConv(vertrag.isFahrzeugAbgemeldet())+","+booleanConv(vertrag.isFahrzeugschein())+
+					","+booleanConv(vertrag.isFahrzeugbrief())+","+booleanConv(vertrag.isStillegungsBescheinigung())+","+booleanConv(vertrag.isUntersuchungsbericht())+
+					","+vertrag.getAnzahlSchluessel()+","+vertrag.getKaufpreis()+","+vertrag.getAnzahlung()+")";
+		
+			sta.executeUpdate(sql1);
+			
+			System.out.println("Boom chaka laka");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
+    public static void writeUnfallschaeden(KfzKaufvertrag vertrag) {
+    	
+    	Connection conn = DatabaseCon.connect();
+    	try {
+			Statement sta = conn.createStatement();
+			String sql2 = "insert into Unfallschaeden values (null, "
+					+ "(SELECT seq FROM sqlite_sequence WHERE name = KfzKaufvertrag),"+vertrag.getBezeichnung()+")";
+			sta.executeUpdate(sql2);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();	 
+		}
+	}
+	
 	public static int booleanConv(boolean bool) {
-
 		if (bool == true)
 			return 1;
 		else
 			return 0;
-
 	}
-
+	
+	public static String dateToString(Date date) {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(date);
+	}
+	
+	public static Date stringToDate(String date) {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date date1 = df.parse(date);
+			return date1;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}	
+	}
 	// public KfzKaufvertrag readKfzKaufvertrag(int ID) {
 	//
 	// Statement sta;

@@ -146,7 +146,9 @@ public class Database {
 		}
 	}
 
-	public static void wirteKfzKaufvertrag(KfzKaufvertrag vertrag) {
+	public static void wirteKfzKaufvertrag(KfzKaufvertrag vertrag, Fahrzeug fahrzeug) {
+		
+		writeFahrzeug(fahrzeug);
 
 		writeKfzAttributes(vertrag);
 
@@ -155,13 +157,12 @@ public class Database {
 		writeArrayListCols("Beschaedigungen", vertrag.getBeschaedigungen(), "KfzKaufvertrag");
 
 		System.out.println("complete");
-
 	}
 
 	public static void writeKfzAttributes(KfzKaufvertrag vertrag) {
 
 		try {
-			Connection conn = DatabaseCon.connect();
+			conn = DatabaseCon.connect();
 			Statement sta = conn.createStatement();
 
 			String sql1 = "insert into KfzKaufvertrag values (null, null, null, null,"
@@ -176,7 +177,7 @@ public class Database {
 			sta.executeUpdate(sql1);
 
 			System.out.println("Boom chaka laka");
-
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -214,8 +215,8 @@ public class Database {
 			vertrag.setBeschaedigungen(readArrayListCols(id, "beschaedigungen"));
 			vertrag.setSondervereinbarungen(readArrayListCols(id, "sondervereinbarungen"));
 
+			conn.close();
 			return vertrag;
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -240,6 +241,7 @@ public class Database {
 				System.out.println(rsUnfall.getString("bezeichnung"));
 
 			}
+			conn.close();
 			return unfallschaeden;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -251,7 +253,7 @@ public class Database {
 
 	public static void writeArrayListCols(String tabellenName, ArrayList<String> liste, String vertragsArt) {
 
-		Connection conn = DatabaseCon.connect();
+		conn = DatabaseCon.connect();
 		try {
 			Statement sta = conn.createStatement();
 
@@ -301,13 +303,103 @@ public class Database {
 					+ erstzulassung + "', " + vorbesitzer + ", " + gewerblicheNutzung + ")";
 			sta.executeUpdate(query1);
 
-			String query2 = "select seq from sqlite_sequence where name = 'Fahrzeug'";
-			System.out.println("upload succeeded!");
+			writeArrayListCols("ZusatzAusstattung", zusatzAusstattung, "Fahrzeug");
+			
+			System.out.println("Fahrzeug upload succeeded!");
 			conn.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void writeMietvertrag(Mietvertrag mv) {
+		
+	}
+	
+	public void writeMietvertragAttributes(Mietvertrag miete) {
+		try {
+			conn = DatabaseCon.connect();
+			Statement state = conn.createStatement();
+
+			String sql = "insert into Mietvertrag values(null, null,'" + dateToString(miete.getMietbeginn()) + "','"
+					+ dateToString(miete.getMietende()) + "'," + miete.getMonatsMiete() + "," + miete.getKeineMieterhoehungInJahren()
+					+ "," + booleanConv(miete.isPreisgebunden()) + "," + booleanConv(miete.isOeffentlichGefoerdert())
+					+ "," + miete.getHoechstMiete() + ",'" + dateToString(miete.getHoechstMieteBis()) + "',"
+					+ miete.getHeizungWarmwasserKosten() + "," + booleanConv(miete.isBetriebskostenPauschalbeistrag())
+					+ "," + booleanConv(miete.isBetriebskostenVorauszahlung()) + "," + miete.getBetriebskosten() + ","
+					+ miete.getMieteGesamtbetrag() + ",'" + miete.getKontoinhaber() + "','" + miete.getIban() + "',"
+					+ miete.getMaxHeizkostenInZweiAbrechnungsperioden() + "," + miete.getPauschale() + ","
+					+ booleanConv(miete.isEnergieausweis()) + ","
+					+ booleanConv(miete.isRichtigkeitEnergieausweisVersichert()) + ",'"
+					+ miete.getZustaendigGartenpflege() + "','" + miete.getZustaendigGartengeraete() + "',"
+					+ miete.getKaution() + "," + miete.getVerteilungHeizUndWarmwasserkosten() + ","
+					+ booleanConv(miete.isBetriebskostenAnteilWohnflaeche()) + ","
+					+ booleanConv(miete.isBetriebskostenEntwaesserungMuellabfuhrWasserversorgung()) + ",'"
+					+ dateToString(miete.getAbrechnungszeitraumHeizUndBetriebskosten())+"')";
+			
+			state.executeUpdate(sql);
+			System.out.println("Noice");
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public static Mietvertrag readMietvertrag(int id) {
+		
+		try {
+			conn = DatabaseCon.connect();
+			Statement stm = conn.createStatement();
+			
+			String query = "select ";
+		    ResultSet res = stm.executeQuery(query);
+			
+			Mietvertrag mt = new Mietvertrag();
+			
+			mt.setId(id);   //ID für Vertrag
+			//mt.setId(id); //Mietobjekt ID
+			mt.setMietbeginn(res.getDate("Mietbeginn"));
+			mt.setMietende(res.getDate("Mietende"));
+			mt.setMonatsMiete(res.getFloat("MonatsMiete"));
+			mt.setKeineMieterhoehungInJahren(res.getFloat("keineMieterhoehungInJahren"));
+			mt.setPreisgebunden(intConv(res.getInt("Preisgebunden")));
+			mt.setOeffentlichGefoerdert(intConv(res.getInt("OeffentlichGefoerdert")));
+			mt.setHoechstMiete(res.getFloat("HoechstMiete"));
+			mt.setHoechstMieteBis(res.getDate("HoechstMieteBis"));
+			mt.setHeizungWarmwasserKosten(res.getFloat("HeizungWarmwasserKosten"));
+			//ArrayList BetriebskostenArten
+			mt.setBetriebskostenPauschalbeistrag(intConv(res.getInt("BetriebskostenPauschalbeitrag")));
+			mt.setBetriebskostenVorauszahlung(intConv(res.getInt("BetriebskostenVorauszahlung")));
+			mt.setBetriebskosten(res.getFloat("Betriebskosten"));
+			mt.setMieteGesamtbetrag(res.getFloat("MieteGesamtbetrag"));
+			mt.setKontoinhaber(res.getString("Kontoinhaber"));
+			mt.setIban(res.getString("Iban"));
+			mt.setMaxHeizkostenInZweiAbrechnungsperioden(res.getFloat("MaxHeizkostenInZweiAbrechnungsperioden"));
+			//ArrayList ArbeitenDieDerMieterVornehmenKann
+			mt.setPauschale(res.getInt("Pauschale"));
+			//ArrayList ArbeitenVorEinzug
+			mt.setEnergieausweis(intConv(res.getInt("Energieausweis")));
+			mt.setRichtigkeitEnergieausweisVersichert(intConv(res.getInt("RichtigkeitEnergieausweisVersichert")));
+			mt.setZustaendigGartenpflege(res.getString("ZustaendigGartenpflege"));
+			mt.setZustaendigGartengeraete(res.getString("ZustaendigGartengeraete"));
+			mt.setKaution(res.getInt("Kaution"));
+			mt.setVerteilungHeizUndWarmwasserkosten(res.getFloat("VerteilungHeizUndWarmwasserkosten"));
+			mt.setBetriebskostenAnteilWohnflaeche(intConv(res.getInt("BetriebskostenAnteilWohnflaeche")));
+			mt.setBetriebskostenEntwaesserungMuellabfuhrWasserversorgung(intConv(res.getInt("BetriebskostenEntwaesserungMuellabfuhrWasserversorgung")));
+			mt.setAbrechnungszeitraumHeizUndBetriebskosten(res.getDate("AbrechnungszeitraumHeizUndBetriebskosten"));
+			
+			
+	        System.out.println("Download Izzzda");
+	        conn.close();
+	        
+	        return mt;
+	}
+		catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		   }
+		}
 
 	public static void deleteTable(int id, String tabellenName) {
 
@@ -349,12 +441,12 @@ public class Database {
 			return null;
 		}
 	}
-
 	public static boolean intConv(int i) {
 		if (i == 0)
 			return false;
 		else
 			return true;
 	}
-
 }
+	
+

@@ -70,12 +70,12 @@ public class Main {
 		kv5.setListeUnfallschaeden(unfallschaeden);
 		kv5.setSondervereinbarungen(sondervereinbarung);
 		kv5.setBeschaedigungen(beschaedigungen);
-		Database.writeKfzKaufvertragKomplett(kv5);
+		Database.wirteKfzKaufvertrag(kv5);
 		
 		
 		kv.setListeUnfallschaeden(unfallschaeden);
 //		Database.writeKfzKaufvertrag(kv);
-		Database.writeKfzKaufvertragKomplett(kv);
+		Database.wirteKfzKaufvertrag(kv);
 		
 		
 //		System.out.println(kv.getBezeichnung());

@@ -17,14 +17,14 @@ public class Mietvertrag {
 	private Date hoechstMieteBis;
 	private float heizungWarmwasserKosten;
 	private ArrayList<String> betriebskostenArten;
-	private boolean betriebskostenPauschalbeitrag;
+	private boolean betriebskostenPauschalbeistrag;
 	private boolean betriebskostenVorauszahlung;
 	private float betriebskosten;
 	private float mieteGesamtbetrag;
 	private String kontoinhaber;
 	private String iban;
 	private float maxHeizkostenInZweiAbrechnungsperioden;
-	private ArrayList<String> arbeitenDieDerMieterVornehmenKann;
+	private ArrayList<String> arbeitenDieDerMieterVornehemnKann;
 	private int pauschale;
 	private ArrayList<String> arbeitenVorEinzug;
 	private boolean energieausweis;
@@ -109,11 +109,11 @@ public class Mietvertrag {
 	public void setBetriebskostenArten(ArrayList<String> betriebskostenArten) {
 		this.betriebskostenArten = betriebskostenArten;
 	}
-	public boolean isBetriebskostenPauschalbeitrag() {
-		return betriebskostenPauschalbeitrag;
+	public boolean isBetriebskostenPauschalbeistrag() {
+		return betriebskostenPauschalbeistrag;
 	}
 	public void setBetriebskostenPauschalbeistrag(boolean betriebskostenPauschalbeistrag) {
-		this.betriebskostenPauschalbeitrag = betriebskostenPauschalbeitrag;
+		this.betriebskostenPauschalbeistrag = betriebskostenPauschalbeistrag;
 	}
 	public boolean isBetriebskostenVorauszahlung() {
 		return betriebskostenVorauszahlung;
@@ -152,10 +152,10 @@ public class Mietvertrag {
 		this.maxHeizkostenInZweiAbrechnungsperioden = maxHeizkostenInZweiAbrechnungsperioden;
 	}
 	public ArrayList<String> getArbeitenDieDerMieterVornehemnKann() {
-		return arbeitenDieDerMieterVornehmenKann;
+		return arbeitenDieDerMieterVornehemnKann;
 	}
 	public void setArbeitenDieDerMieterVornehemnKann(ArrayList<String> arbeitenDieDerMieterVornehemnKann) {
-		this.arbeitenDieDerMieterVornehmenKann = arbeitenDieDerMieterVornehemnKann;
+		this.arbeitenDieDerMieterVornehemnKann = arbeitenDieDerMieterVornehemnKann;
 	}
 	public int getPauschale() {
 		return pauschale;

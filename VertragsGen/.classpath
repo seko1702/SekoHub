@@ -2,6 +2,13 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/sewerynkozlowski/Downloads/sqlite-jdbc-3.18.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Media/git/HarisGit/VertragsGen/Ressource/sqlite-jdbc-3.18.0.jar"/>
+	<classpathentry kind="lib" path="Ressource/fontbox-2.0.9.jar"/>
+	<classpathentry kind="lib" path="Ressource/pdfbox-app-2.0.9.jar"/>
+	<classpathentry kind="lib" path="Ressource/pdfbox-2.0.9.jar"/>
+	<classpathentry kind="lib" path="Ressource/pdfbox-tools-2.0.9.jar"/>
+	<classpathentry kind="lib" path="Ressource/preflight-2.0.9.jar"/>
+	<classpathentry kind="lib" path="Ressource/preflight-app-2.0.9.jar"/>
+	<classpathentry kind="lib" path="Ressource/sqlite-jdbc-3.18.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

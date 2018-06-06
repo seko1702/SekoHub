@@ -9,6 +9,7 @@ import model.JuristischePartei;
 import model.NatuerlichePartei;
 
 import model.KfzKaufvertrag;
+import model.Mietvertrag;
 
 public class Database {
 	
@@ -232,5 +233,115 @@ public static void writeJuristischePartei(JuristischePartei jp) {
 	//
 	//
 	// }
+	
+	/**
+	 * 
+	 * Wer das liest ist doof hehe
+	 * 
+	 */
+	
+	public void writeMietvertrag(Mietvertrag miete) {
 
-}
+		try {
+			conn = DatabaseCon.connect();
+			Statement state = conn.createStatement();
+
+			String sql = "insert into Mietvertrag values(null, null,'" + dateToString(miete.getMietbeginn()) + "','"
+					+ dateToString(miete.getMietende()) + "'," + miete.getMonatsMiete() + "," + miete.getKeineMieterhoehungInJahren()
+					+ "," + booleanConv(miete.isPreisgebunden()) + "," + booleanConv(miete.isOeffentlichGefoerdert())
+					+ "," + miete.getHoechstMiete() + ",'" + dateToString(miete.getHoechstMieteBis()) + "',"
+					+ miete.getHeizungWarmwasserKosten() + "," + booleanConv(miete.isBetriebskostenPauschalbeitrag())
+					+ "," + booleanConv(miete.isBetriebskostenVorauszahlung()) + "," + miete.getBetriebskosten() + ","
+					+ miete.getMieteGesamtbetrag() + ",'" + miete.getKontoinhaber() + "','" + miete.getIban() + "',"
+					+ miete.getMaxHeizkostenInZweiAbrechnungsperioden() + "," + miete.getPauschale() + ","
+					+ booleanConv(miete.isEnergieausweis()) + ","
+					+ booleanConv(miete.isRichtigkeitEnergieausweisVersichert()) + ",'"
+					+ miete.getZustaendigGartenpflege() + "','" + miete.getZustaendigGartengeraete() + "',"
+					+ miete.getKaution() + "," + miete.getVerteilungHeizUndWarmwasserkosten() + ","
+					+ booleanConv(miete.isBetriebskostenAnteilWohnflaeche()) + ","
+					+ booleanConv(miete.isBetriebskostenEntwaesserungMuellabfuhrWasserversorgung()) + ",'"
+					+ dateToString(miete.getAbrechnungszeitraumHeizUndBetriebskosten())+"')";
+
+			state.executeUpdate(sql);
+			System.out.println("Noice");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	public static boolean intConv(int i) {
+		if(i==0)
+			return false;
+		else
+			return true;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	public static Mietvertrag readMietvertrag(int id) {
+		
+		try {
+			conn = DatabaseCon.connect();
+			Statement stm = conn.createStatement();
+			
+			String query = "select ";
+		    ResultSet res = stm.executeQuery(query);
+			
+			Mietvertrag mt = new Mietvertrag();
+			
+			mt.setId(id);   //ID für Vertrag
+			//mt.setIdt(idt); //Mietobjekt ID
+			mt.setMietbeginn(res.getDate("Mietbeginn"));
+			mt.setMietende(res.getDate("Mietende"));
+			mt.setMonatsMiete(res.getFloat("MonatsMiete"));
+			mt.setKeineMieterhoehungInJahren(res.getFloat("keineMieterhoehungInJahren"));
+			mt.setPreisgebunden(intConv(res.getInt("Preisgebunden")));
+			mt.setOeffentlichGefoerdert(intConv(res.getInt("OeffentlichGefoerdert")));
+			mt.setHoechstMiete(res.getFloat("HoechstMiete"));
+			mt.setHoechstMieteBis(res.getDate("HoechstMieteBis"));
+			mt.setHeizungWarmwasserKosten(res.getFloat("HeizungWarmwasserKosten"));
+			//ArrayList BetriebskostenArten
+			mt.setBetriebskostenPauschalbeistrag(intConv(res.getInt("BetriebskostenPauschalbeitrag")));
+			mt.setBetriebskostenVorauszahlung(intConv(res.getInt("BetriebskostenVorauszahlung")));
+			mt.setBetriebskosten(res.getFloat("Betriebskosten"));
+			mt.setMieteGesamtbetrag(res.getFloat("MieteGesamtbetrag"));
+			mt.setKontoinhaber(res.getString("Kontoinhaber"));
+			mt.setIban(res.getString("Iban"));
+			mt.setMaxHeizkostenInZweiAbrechnungsperioden(res.getFloat("MaxHeizkostenInZweiAbrechnungsperioden"));
+			//ArrayList ArbeitenDieDerMieterVornehmenKann
+			mt.setPauschale(res.getInt("Pauschale"));
+			//ArrayList ArbeitenVorEinzug
+			mt.setEnergieausweis(intConv(res.getInt("Energieausweis")));
+			mt.setRichtigkeitEnergieausweisVersichert(intConv(res.getInt("RichtigkeitEnergieausweisVersichert")));
+			mt.setZustaendigGartenpflege(res.getString("ZustaendigGartenpflege"));
+			mt.setZustaendigGartengeraete(res.getString("ZustaendigGartengeraete"));
+			mt.setKaution(res.getInt("Kaution"));
+			mt.setVerteilungHeizUndWarmwasserkosten(res.getFloat("VerteilungHeizUndWarmwasserkosten"));
+			mt.setBetriebskostenAnteilWohnflaeche(intConv(res.getInt("BetriebskostenAnteilWohnflaeche")));
+			mt.setBetriebskostenEntwaesserungMuellabfuhrWasserversorgung(intConv(res.getInt("BetriebskostenEntwaesserungMuellabfuhrWasserversorgung")));
+			mt.setAbrechnungszeitraumHeizUndBetriebskosten(res.getDate("AbrechnungszeitraumHeizUndBetriebskosten"));
+			
+			
+	        System.out.println("Download Izzzda");
+	        conn.close();
+	        
+	        return mt;
+	}
+		catch(SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		   }
+		}
+
+	}
+	
+

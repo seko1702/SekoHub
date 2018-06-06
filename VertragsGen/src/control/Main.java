@@ -4,6 +4,7 @@ import model.NatuerlichePartei;
 
 import model.Fahrzeug;
 import model.KfzKaufvertrag;
+import model.Mietvertrag;
 import model.NatuerlichePartei;
 
 public class Main {
@@ -42,7 +43,12 @@ public class Main {
 		kv.setBezeichnung("Rechter Kotflügel");
 		
 //		db.writeKfzKaufvertrag(kv);
-		db.writeUnfallschaeden(kv);
+//		db.writeUnfallschaeden(kv);
+		
+		Mietvertrag m = new Mietvertrag();
+		m.setKaution(3000);
+		
+	    db.writeMietvertrag(m);
 		
 		
 	}

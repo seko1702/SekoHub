@@ -17,20 +17,20 @@ public class Mietvertrag {
 	private Date hoechstMieteBis;
 	private float heizungWarmwasserKosten;
 	private ArrayList<String> betriebskostenArten;
-	private boolean betriebskostenPauschalbeistrag;
+	private boolean betriebskostenPauschalbeitrag;
 	private boolean betriebskostenVorauszahlung;
 	private float betriebskosten;
 	private float mieteGesamtbetrag;
 	private String kontoinhaber;
 	private String iban;
 	private float maxHeizkostenInZweiAbrechnungsperioden;
-	private ArrayList<String> arbeitenDieDerMieterVornehemnKann;
+	private ArrayList<String> arbeitenDieDerMieterVornehmenKann;
 	private int pauschale;
 	private ArrayList<String> arbeitenVorEinzug;
 	private boolean energieausweis;
 	private boolean richtigkeitEnergieausweisVersichert;
-	private Partei zustaendigGartenpflege;
-	private Partei zustaendigGartengeraete;
+	private String zustaendigGartenpflege;
+	private String zustaendigGartengeraete;
 	private int kaution;
 	private float verteilungHeizUndWarmwasserkosten;
 	private boolean betriebskostenAnteilWohnflaeche;
@@ -109,11 +109,11 @@ public class Mietvertrag {
 	public void setBetriebskostenArten(ArrayList<String> betriebskostenArten) {
 		this.betriebskostenArten = betriebskostenArten;
 	}
-	public boolean isBetriebskostenPauschalbeistrag() {
-		return betriebskostenPauschalbeistrag;
+	public boolean isBetriebskostenPauschalbeitrag() {
+		return betriebskostenPauschalbeitrag;
 	}
 	public void setBetriebskostenPauschalbeistrag(boolean betriebskostenPauschalbeistrag) {
-		this.betriebskostenPauschalbeistrag = betriebskostenPauschalbeistrag;
+		this.betriebskostenPauschalbeitrag = betriebskostenPauschalbeitrag;
 	}
 	public boolean isBetriebskostenVorauszahlung() {
 		return betriebskostenVorauszahlung;
@@ -152,10 +152,10 @@ public class Mietvertrag {
 		this.maxHeizkostenInZweiAbrechnungsperioden = maxHeizkostenInZweiAbrechnungsperioden;
 	}
 	public ArrayList<String> getArbeitenDieDerMieterVornehemnKann() {
-		return arbeitenDieDerMieterVornehemnKann;
+		return arbeitenDieDerMieterVornehmenKann;
 	}
 	public void setArbeitenDieDerMieterVornehemnKann(ArrayList<String> arbeitenDieDerMieterVornehemnKann) {
-		this.arbeitenDieDerMieterVornehemnKann = arbeitenDieDerMieterVornehemnKann;
+		this.arbeitenDieDerMieterVornehmenKann = arbeitenDieDerMieterVornehemnKann;
 	}
 	public int getPauschale() {
 		return pauschale;
@@ -181,16 +181,16 @@ public class Mietvertrag {
 	public void setRichtigkeitEnergieausweisVersichert(boolean richtigkeitEnergieausweisVersichert) {
 		this.richtigkeitEnergieausweisVersichert = richtigkeitEnergieausweisVersichert;
 	}
-	public Partei getZustaendigGartenpflege() {
+	public String getZustaendigGartenpflege() {
 		return zustaendigGartenpflege;
 	}
-	public void setZustaendigGartenpflege(Partei zustaendigGartenpflege) {
+	public void setZustaendigGartenpflege(String zustaendigGartenpflege) {
 		this.zustaendigGartenpflege = zustaendigGartenpflege;
 	}
-	public Partei getZustaendigGartengeraete() {
+	public String getZustaendigGartengeraete() {
 		return zustaendigGartengeraete;
 	}
-	public void setZustaendigGartengeraete(Partei zustaendigGartengeraete) {
+	public void setZustaendigGartengeraete(String zustaendigGartengeraete) {
 		this.zustaendigGartengeraete = zustaendigGartengeraete;
 	}
 	public int getKaution() {

@@ -4,11 +4,6 @@ import java.util.Date;
 
 public class NatuerlichePartei extends Partei{
 	
-	public NatuerlichePartei(){
-		
-	};
-
-	private int id;
 	private String name;
 	private String vorname;
 	private String personalausweisNr;
@@ -16,12 +11,6 @@ public class NatuerlichePartei extends Partei{
 	private Date ausstellungsdatum;
 	private Date geburtsdatum;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}

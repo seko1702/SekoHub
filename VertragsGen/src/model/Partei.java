@@ -2,6 +2,7 @@ package model;
 
 public abstract class Partei {
 	
+	private int id;
 	private String strasse;
 	private int hausnummer;
 	private String hausnummerZusatz;
@@ -9,6 +10,12 @@ public abstract class Partei {
 	private String ort;
 	private int telnummer;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getStrasse() {
 		return strasse;
 	}

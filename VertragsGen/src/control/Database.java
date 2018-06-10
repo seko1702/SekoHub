@@ -21,7 +21,7 @@ public class Database {
 	private static Connection conn;
 
 	// Speichert eine Natuerliche Partei in die Datenbank
-	public static void writeNatuerlichePartei(NatuerlichePartei np) {
+	public static void writePartei(NatuerlichePartei np) {
 
 		String strasse = np.getStrasse();
 		int hausnummer = np.getHausnummer();
@@ -45,102 +45,94 @@ public class Database {
 					+ name + "', '" + vorname + "', '" + personalausweisNr + "', '" + ausstellungsbehoerde + "', '"
 					+ ausstellungsdatum + "', '" + geburtsdatum + "');";
 			sta.executeUpdate(query);
-			System.out.println("upload succeeded!");
+			System.out.println("Partei upload succeeded!");
 			conn.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-
-	// Liest eine Natuerliche Partei aus der Datenbank
-	public static NatuerlichePartei readNatuerlichePartei(int id) {
-
-		try {
-			conn = DatabaseCon.connect();
-			Statement sta = conn.createStatement();
-
-			String query = "select * from Partei where Partei_ID=" + id;
-			ResultSet rs = sta.executeQuery(query);
-
-			NatuerlichePartei np = new NatuerlichePartei();
-
-			np.setId(id);
-			np.setStrasse(rs.getString("strasse"));
-			np.setHausnummer(rs.getInt("hausnummer"));
-			np.setHausnummerZusatz(rs.getString("hausnummerZusatz"));
-			np.setPlz(rs.getInt("plz"));
-			np.setOrt(rs.getString("ort"));
-			np.setTelnummer(rs.getInt("telefonnummer"));
-			np.setName(rs.getString("name"));
-			np.setVorname(rs.getString("vorname"));
-			np.setPersonalausweisNr(rs.getString("personalausweisNr"));
-			np.setAusstellungsbehoerde(rs.getString("austellungsbehoerde"));
-			np.setAusstellungsdatum(stringToDate(rs.getString("austellungsdatum")));
-			np.setGeburtsdatum(stringToDate(rs.getString("geburtsdatum")));
-
-			System.out.println("download succeeded!");
-			conn.close();
-
-			return np;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-
+	
 	// Speichert eine Juristische Partei in die Datenbank
-	public static void writeJuristischePartei(JuristischePartei jp) {
+		public static void writePartei(JuristischePartei jp) {
 
-		String strasse = jp.getStrasse();
-		int hausnummer = jp.getHausnummer();
-		String hausnummerZusatz = jp.getHausnummerZusatz();
-		int plz = jp.getPlz();
-		String ort = jp.getOrt();
-		int telnummer = jp.getTelnummer();
-		String firmenname = jp.getFirmenname();
-		String handelsregister = jp.getHandelsregister();
+			String strasse = jp.getStrasse();
+			int hausnummer = jp.getHausnummer();
+			String hausnummerZusatz = jp.getHausnummerZusatz();
+			int plz = jp.getPlz();
+			String ort = jp.getOrt();
+			int telnummer = jp.getTelnummer();
+			String firmenname = jp.getFirmenname();
+			String handelsregister = jp.getHandelsregister();
 
-		try {
-			conn = DatabaseCon.connect();
-			Statement sta = conn.createStatement();
+			try {
+				conn = DatabaseCon.connect();
+				Statement sta = conn.createStatement();
 
-			String query = "insert into Partei values (null, 'JuristischePartei', '" + strasse + "'," + hausnummer
-					+ ", '" + hausnummerZusatz + "'," + plz + ", '" + ort + "', " + telnummer + ", '" + firmenname
-					+ "', '" + handelsregister + "',null,null,null,null,null,null)";
-			sta.executeUpdate(query);
-			System.out.println("upload succeeded!");
-			conn.close();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+				String query = "insert into Partei values (null, 'JuristischePartei', '" + strasse + "'," + hausnummer
+						+ ", '" + hausnummerZusatz + "'," + plz + ", '" + ort + "', " + telnummer + ", '" + firmenname
+						+ "', '" + handelsregister + "',null,null,null,null,null,null)";
+				sta.executeUpdate(query);
+				System.out.println("Partei upload succeeded!");
+				conn.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 		}
-	}
 
-	// Liest eine Juristische Partei aus der Datenbank
-	public static JuristischePartei readJuristischePartei(int id) {
+	// Liest eine Partei aus der Datenbank
+	public static Partei readPartei(String vorname, String name) {
 
 		try {
 			conn = DatabaseCon.connect();
 			Statement sta = conn.createStatement();
 
-			String query = "select  ";
+			String query = "select * from Partei where vorname ='"+ vorname +"' and name = '"+ name +"';";
 			ResultSet rs = sta.executeQuery(query);
+			
+			if(rs.getString("ParteiArt") == "NatÃ¼rlichePartei") {
+				NatuerlichePartei np = new NatuerlichePartei();
 
-			JuristischePartei jp = new JuristischePartei();
+				np.setId(rs.getInt("Partei_ID"));
+				np.setStrasse(rs.getString("strasse"));
+				np.setHausnummer(rs.getInt("hausnummer"));
+				np.setHausnummerZusatz(rs.getString("hausnummerZusatz"));
+				np.setPlz(rs.getInt("plz"));
+				np.setOrt(rs.getString("ort"));
+				np.setTelnummer(rs.getInt("telefonnummer"));
+				np.setName(rs.getString("name"));
+				np.setVorname(rs.getString("vorname"));
+				np.setPersonalausweisNr(rs.getString("personalausweisNr"));
+				np.setAusstellungsbehoerde(rs.getString("austellungsbehoerde"));
+				np.setAusstellungsdatum(stringToDate(rs.getString("austellungsdatum")));
+				np.setGeburtsdatum(stringToDate(rs.getString("geburtsdatum")));
 
-			jp.setId(id);
-			jp.setStrasse(rs.getString("strasse"));
-			jp.setHausnummer(rs.getInt("hausnummer"));
-			jp.setHausnummerZusatz(rs.getString("hausnummerZusatz"));
-			jp.setPlz(rs.getInt("plz"));
-			jp.setOrt(rs.getString("ort"));
-			jp.setTelnummer(rs.getInt("telefonnummer"));
-			jp.setFirmenname(rs.getString("firmenname"));
-			jp.setHandelsregister(rs.getString("handelsregister"));
+				System.out.println("Partei download succeeded!");
+				conn.close();
 
-			System.out.println("download succeeded!");
-			conn.close();
+				return np;
+			}
+			else if(rs.getString("ParteiArt") == "JuristischePartei") {
+				JuristischePartei jp = new JuristischePartei();
 
-			return jp;
+				jp.setId(rs.getInt("Partei_ID"));
+				jp.setStrasse(rs.getString("strasse"));
+				jp.setHausnummer(rs.getInt("hausnummer"));
+				jp.setHausnummerZusatz(rs.getString("hausnummerZusatz"));
+				jp.setPlz(rs.getInt("plz"));
+				jp.setOrt(rs.getString("ort"));
+				jp.setTelnummer(rs.getInt("telefonnummer"));
+				jp.setFirmenname(rs.getString("firmenname"));
+				jp.setHandelsregister(rs.getString("handelsregister"));
+
+				System.out.println("Partei download succeeded!");
+				conn.close();
+
+				return jp;
+			}
+			else {
+				System.out.println("Invalid Partei Art");
+				return null;
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -166,7 +158,6 @@ public class Database {
             Connection conn = DatabaseCon.connect();
             Statement sta = conn.createStatement();
 
-
             ResultSet fID= sta.executeQuery("SELECT seq FROM sqlite_sequence WHERE name = 'Fahrzeug'");
             int fahrzeugID = fID.getInt(1);
 
@@ -174,20 +165,18 @@ public class Database {
             int partei1ID= kID.getInt(1);
             int partei2ID= partei1ID-1;
 
-
-
             String sql1 = "insert into KfzKaufvertrag values (null, "+fahrzeugID+", "+partei1ID+", "+partei2ID+","
-                    + booleanConv(vertrag.isAlleinigesEigentum()) + "," + booleanConv(vertrag.isAustauschmotor()) + ","
-                    + vertrag.getAustauschmotorLaufleistung() + "," + booleanConv(vertrag.isUnfallschaden()) + ","
-                    + booleanConv(vertrag.isUmmeldungUnverzueglich()) + ","
-                    + booleanConv(vertrag.isFahrzeugAbgemeldet()) + "," + booleanConv(vertrag.isFahrzeugschein()) + ","
-                    + booleanConv(vertrag.isFahrzeugbrief()) + "," + booleanConv(vertrag.isStillegungsBescheinigung())
-                    + "," + booleanConv(vertrag.isUntersuchungsbericht()) + "," + vertrag.getAnzahlSchluessel() + ","
+                    + booleanToInt(vertrag.isAlleinigesEigentum()) + "," + booleanToInt(vertrag.isAustauschmotor()) + ","
+                    + vertrag.getAustauschmotorLaufleistung() + "," + booleanToInt(vertrag.isUnfallschaden()) + ","
+                    + booleanToInt(vertrag.isUmmeldungUnverzueglich()) + ","
+                    + booleanToInt(vertrag.isFahrzeugAbgemeldet()) + "," + booleanToInt(vertrag.isFahrzeugschein()) + ","
+                    + booleanToInt(vertrag.isFahrzeugbrief()) + "," + booleanToInt(vertrag.isStillegungsBescheinigung())
+                    + "," + booleanToInt(vertrag.isUntersuchungsbericht()) + "," + vertrag.getAnzahlSchluessel() + ","
                     + vertrag.getKaufpreis() + "," + vertrag.getAnzahlung() + ")";
 
             sta.executeUpdate(sql1);
 
-            System.out.println("Boom chaka laka");
+            System.out.println("Fahrzeug Attribute download succeeded!");
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -208,16 +197,16 @@ public class Database {
 			KfzKaufvertrag vertrag = new KfzKaufvertrag();
 
 			vertrag.setId(id);
-			vertrag.setAlleinigesEigentum(intConv(rsVertrag.getInt("alleinigesEigentum")));
-			vertrag.setAustauschmotor(intConv(rsVertrag.getInt("austauschmotor")));
+			vertrag.setAlleinigesEigentum(intToBoolean(rsVertrag.getInt("alleinigesEigentum")));
+			vertrag.setAustauschmotor(intToBoolean(rsVertrag.getInt("austauschmotor")));
 			vertrag.setAustauschmotorLaufleistung(rsVertrag.getInt("austauschmotorLaufleistung"));
-			vertrag.setUnfallschaden(intConv(rsVertrag.getInt("unfallschaden")));
-			vertrag.setUmmeldungUnverzueglich(intConv(rsVertrag.getInt("ummeldungUnverzueglich")));
-			vertrag.setFahrzeugAbgemeldet(intConv(rsVertrag.getInt("fahrzeugAbgemeldet")));
-			vertrag.setFahrzeugschein(intConv(rsVertrag.getInt("fahrzeugschein")));
-			vertrag.setFahrzeugbrief(intConv(rsVertrag.getInt("fahrzeugbrief")));
-			vertrag.setStillegungsBescheinigung(intConv(rsVertrag.getInt("stillegungsBescheinigung")));
-			vertrag.setUntersuchungsbericht(intConv(rsVertrag.getInt("untersuchungsbericht")));
+			vertrag.setUnfallschaden(intToBoolean(rsVertrag.getInt("unfallschaden")));
+			vertrag.setUmmeldungUnverzueglich(intToBoolean(rsVertrag.getInt("ummeldungUnverzueglich")));
+			vertrag.setFahrzeugAbgemeldet(intToBoolean(rsVertrag.getInt("fahrzeugAbgemeldet")));
+			vertrag.setFahrzeugschein(intToBoolean(rsVertrag.getInt("fahrzeugschein")));
+			vertrag.setFahrzeugbrief(intToBoolean(rsVertrag.getInt("fahrzeugbrief")));
+			vertrag.setStillegungsBescheinigung(intToBoolean(rsVertrag.getInt("stillegungsBescheinigung")));
+			vertrag.setUntersuchungsbericht(intToBoolean(rsVertrag.getInt("untersuchungsbericht")));
 			vertrag.setAnzahlSchluessel(rsVertrag.getInt("anzahlSchluessel"));
 			vertrag.setKaufpreis(rsVertrag.getInt("kaufpreis"));
 			vertrag.setAnzahlung(rsVertrag.getInt("anzahlung"));
@@ -273,11 +262,10 @@ public class Database {
 
 			if (!liste.isEmpty()) {
 				for (String schaden : liste) {
-
 					String sql2 = "insert into " + tabellenName + " values (null, " + id + " , '" + schaden + "')";
 					sta.executeUpdate(sql2);
-
 				}
+				System.out.println("Array upload succeeded!");
 			}
 
 		} catch (SQLException e) {
@@ -302,7 +290,7 @@ public class Database {
 		String erstzulassung = dateToString(fz.getErstzulassung());
 		ArrayList<String> zusatzAusstattung = fz.getZusatzAusstattung();
 		int vorbesitzer = fz.getAnzahlVorbesitzer();
-		int gewerblicheNutzung = booleanConv(fz.isGewerbNutzung());
+		int gewerblicheNutzung = booleanToInt(fz.isGewerbNutzung());
 
 		try {
 			conn = DatabaseCon.connect();
@@ -334,18 +322,18 @@ public class Database {
 
 			String sql = "insert into Mietvertrag values(null, null,'" + dateToString(miete.getMietbeginn()) + "','"
 					+ dateToString(miete.getMietende()) + "'," + miete.getMonatsMiete() + "," + miete.getKeineMieterhoehungInJahren()
-					+ "," + booleanConv(miete.isPreisgebunden()) + "," + booleanConv(miete.isOeffentlichGefoerdert())
+					+ "," + booleanToInt(miete.isPreisgebunden()) + "," + booleanToInt(miete.isOeffentlichGefoerdert())
 					+ "," + miete.getHoechstMiete() + ",'" + dateToString(miete.getHoechstMieteBis()) + "',"
-					+ miete.getHeizungWarmwasserKosten() + "," + booleanConv(miete.isBetriebskostenPauschalbeistrag())
-					+ "," + booleanConv(miete.isBetriebskostenVorauszahlung()) + "," + miete.getBetriebskosten() + ","
+					+ miete.getHeizungWarmwasserKosten() + "," + booleanToInt(miete.isBetriebskostenPauschalbeistrag())
+					+ "," + booleanToInt(miete.isBetriebskostenVorauszahlung()) + "," + miete.getBetriebskosten() + ","
 					+ miete.getMieteGesamtbetrag() + ",'" + miete.getKontoinhaber() + "','" + miete.getIban() + "',"
 					+ miete.getMaxHeizkostenInZweiAbrechnungsperioden() + "," + miete.getPauschale() + ","
-					+ booleanConv(miete.isEnergieausweis()) + ","
-					+ booleanConv(miete.isRichtigkeitEnergieausweisVersichert()) + ",'"
+					+ booleanToInt(miete.isEnergieausweis()) + ","
+					+ booleanToInt(miete.isRichtigkeitEnergieausweisVersichert()) + ",'"
 					+ miete.getZustaendigGartenpflege() + "','" + miete.getZustaendigGartengeraete() + "',"
 					+ miete.getKaution() + "," + miete.getVerteilungHeizUndWarmwasserkosten() + ","
-					+ booleanConv(miete.isBetriebskostenAnteilWohnflaeche()) + ","
-					+ booleanConv(miete.isBetriebskostenEntwaesserungMuellabfuhrWasserversorgung()) + ",'"
+					+ booleanToInt(miete.isBetriebskostenAnteilWohnflaeche()) + ","
+					+ booleanToInt(miete.isBetriebskostenEntwaesserungMuellabfuhrWasserversorgung()) + ",'"
 					+ dateToString(miete.getAbrechnungszeitraumHeizUndBetriebskosten())+"')";
 			
 			state.executeUpdate(sql);
@@ -368,20 +356,20 @@ public class Database {
 			
 			Mietvertrag mt = new Mietvertrag();
 			
-			mt.setId(id);   //ID für Vertrag
+			mt.setId(id);   //ID fï¿½r Vertrag
 			//mt.setId(id); //Mietobjekt ID
 			mt.setMietbeginn(res.getDate("Mietbeginn"));
 			mt.setMietende(res.getDate("Mietende"));
 			mt.setMonatsMiete(res.getFloat("MonatsMiete"));
 			mt.setKeineMieterhoehungInJahren(res.getFloat("keineMieterhoehungInJahren"));
-			mt.setPreisgebunden(intConv(res.getInt("Preisgebunden")));
-			mt.setOeffentlichGefoerdert(intConv(res.getInt("OeffentlichGefoerdert")));
+			mt.setPreisgebunden(intToBoolean(res.getInt("Preisgebunden")));
+			mt.setOeffentlichGefoerdert(intToBoolean(res.getInt("OeffentlichGefoerdert")));
 			mt.setHoechstMiete(res.getFloat("HoechstMiete"));
 			mt.setHoechstMieteBis(res.getDate("HoechstMieteBis"));
 			mt.setHeizungWarmwasserKosten(res.getFloat("HeizungWarmwasserKosten"));
 			//ArrayList BetriebskostenArten
-			mt.setBetriebskostenPauschalbeistrag(intConv(res.getInt("BetriebskostenPauschalbeitrag")));
-			mt.setBetriebskostenVorauszahlung(intConv(res.getInt("BetriebskostenVorauszahlung")));
+			mt.setBetriebskostenPauschalbeistrag(intToBoolean(res.getInt("BetriebskostenPauschalbeitrag")));
+			mt.setBetriebskostenVorauszahlung(intToBoolean(res.getInt("BetriebskostenVorauszahlung")));
 			mt.setBetriebskosten(res.getFloat("Betriebskosten"));
 			mt.setMieteGesamtbetrag(res.getFloat("MieteGesamtbetrag"));
 			mt.setKontoinhaber(res.getString("Kontoinhaber"));
@@ -390,16 +378,15 @@ public class Database {
 			//ArrayList ArbeitenDieDerMieterVornehmenKann
 			mt.setPauschale(res.getInt("Pauschale"));
 			//ArrayList ArbeitenVorEinzug
-			mt.setEnergieausweis(intConv(res.getInt("Energieausweis")));
-			mt.setRichtigkeitEnergieausweisVersichert(intConv(res.getInt("RichtigkeitEnergieausweisVersichert")));
+			mt.setEnergieausweis(intToBoolean(res.getInt("Energieausweis")));
+			mt.setRichtigkeitEnergieausweisVersichert(intToBoolean(res.getInt("RichtigkeitEnergieausweisVersichert")));
 			mt.setZustaendigGartenpflege(res.getString("ZustaendigGartenpflege"));
 			mt.setZustaendigGartengeraete(res.getString("ZustaendigGartengeraete"));
 			mt.setKaution(res.getInt("Kaution"));
 			mt.setVerteilungHeizUndWarmwasserkosten(res.getFloat("VerteilungHeizUndWarmwasserkosten"));
-			mt.setBetriebskostenAnteilWohnflaeche(intConv(res.getInt("BetriebskostenAnteilWohnflaeche")));
-			mt.setBetriebskostenEntwaesserungMuellabfuhrWasserversorgung(intConv(res.getInt("BetriebskostenEntwaesserungMuellabfuhrWasserversorgung")));
-			mt.setAbrechnungszeitraumHeizUndBetriebskosten(res.getDate("AbrechnungszeitraumHeizUndBetriebskosten"));
-			
+			mt.setBetriebskostenAnteilWohnflaeche(intToBoolean(res.getInt("BetriebskostenAnteilWohnflaeche")));
+			mt.setBetriebskostenEntwaesserungMuellabfuhrWasserversorgung(intToBoolean(res.getInt("BetriebskostenEntwaesserungMuellabfuhrWasserversorgung")));
+			mt.setAbrechnungszeitraumHeizUndBetriebskosten(res.getDate("AbrechnungszeitraumHeizUndBetriebskosten"));		
 			
 	        System.out.println("Download Izzzda");
 	        conn.close();
@@ -430,33 +417,42 @@ public class Database {
 
 	}
 
-	public static int booleanConv(boolean bool) {
+	public static int booleanToInt(boolean bool) {
 		if (bool == true)
 			return 1;
 		else
 			return 0;
 	}
-
-	public static String dateToString(Date date) {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		return df.format(date);
-	}
-
-	public static Date stringToDate(String date) {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			Date date1 = df.parse(date);
-			return date1;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-	public static boolean intConv(int i) {
+	public static boolean intToBoolean(int i) {
 		if (i == 0)
 			return false;
 		else
 			return true;
+	}
+	public static String dateToString(Date date) {
+		if(!(date == null)) {
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			return df.format(date);
+		}
+		else {
+			return null;
+		}
+		
+	}
+	public static Date stringToDate(String date) {
+		if(!(date == null)) {
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				Date date1 = df.parse(date);
+				return date1;
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+		}
+		else {
+			return null;
+		}
 	}
 }
 	

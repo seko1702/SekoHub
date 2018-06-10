@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="Ressource/preflight-app-2.0.9.jar"/>
 	<classpathentry kind="lib" path="Ressource/sqlite-jdbc-3.18.0.jar"/>
 	<classpathentry kind="lib" path="Ressource/xmpbox-2.0.9.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javafx"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

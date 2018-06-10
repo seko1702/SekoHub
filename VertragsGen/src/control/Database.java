@@ -11,6 +11,7 @@ import java.util.Date;
 import model.Fahrzeug;
 import model.JuristischePartei;
 import model.NatuerlichePartei;
+import model.Partei;
 import model.Vertrag;
 import model.KfzKaufvertrag;
 import model.Mietvertrag;
@@ -146,7 +147,7 @@ public class Database {
 		}
 	}
 
-	public static void wirteKfzKaufvertrag(KfzKaufvertrag vertrag, Fahrzeug fahrzeug) {
+	public static void wirteKfzKaufvertrag(KfzKaufvertrag vertrag, Fahrzeug fahrzeug, Partei p1, Partei p2) {
 		
 		writeFahrzeug(fahrzeug);
 
@@ -161,30 +162,40 @@ public class Database {
 
 	public static void writeKfzAttributes(KfzKaufvertrag vertrag) {
 
-		try {
-			conn = DatabaseCon.connect();
-			Statement sta = conn.createStatement();
+        try {
+            Connection conn = DatabaseCon.connect();
+            Statement sta = conn.createStatement();
 
-			String sql1 = "insert into KfzKaufvertrag values (null, null, null, null,"
-					+ booleanConv(vertrag.isAlleinigesEigentum()) + "," + booleanConv(vertrag.isAustauschmotor()) + ","
-					+ vertrag.getAustauschmotorLaufleistung() + "," + booleanConv(vertrag.isUnfallschaden()) + ","
-					+ booleanConv(vertrag.isUmmeldungUnverzueglich()) + ","
-					+ booleanConv(vertrag.isFahrzeugAbgemeldet()) + "," + booleanConv(vertrag.isFahrzeugschein()) + ","
-					+ booleanConv(vertrag.isFahrzeugbrief()) + "," + booleanConv(vertrag.isStillegungsBescheinigung())
-					+ "," + booleanConv(vertrag.isUntersuchungsbericht()) + "," + vertrag.getAnzahlSchluessel() + ","
-					+ vertrag.getKaufpreis() + "," + vertrag.getAnzahlung() + ")";
 
-			sta.executeUpdate(sql1);
+            ResultSet fID= sta.executeQuery("SELECT seq FROM sqlite_sequence WHERE name = 'Fahrzeug'");
+            int fahrzeugID = fID.getInt(1);
 
-			System.out.println("Boom chaka laka");
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            ResultSet kID= sta.executeQuery("SELECT seq FROM sqlite_sequence WHERE name = 'Partei'");
+            int partei1ID= kID.getInt(1);
+            int partei2ID= partei1ID-1;
 
-	}
 
+
+            String sql1 = "insert into KfzKaufvertrag values (null, "+fahrzeugID+", "+partei1ID+", "+partei2ID+","
+                    + booleanConv(vertrag.isAlleinigesEigentum()) + "," + booleanConv(vertrag.isAustauschmotor()) + ","
+                    + vertrag.getAustauschmotorLaufleistung() + "," + booleanConv(vertrag.isUnfallschaden()) + ","
+                    + booleanConv(vertrag.isUmmeldungUnverzueglich()) + ","
+                    + booleanConv(vertrag.isFahrzeugAbgemeldet()) + "," + booleanConv(vertrag.isFahrzeugschein()) + ","
+                    + booleanConv(vertrag.isFahrzeugbrief()) + "," + booleanConv(vertrag.isStillegungsBescheinigung())
+                    + "," + booleanConv(vertrag.isUntersuchungsbericht()) + "," + vertrag.getAnzahlSchluessel() + ","
+                    + vertrag.getKaufpreis() + "," + vertrag.getAnzahlung() + ")";
+
+            sta.executeUpdate(sql1);
+
+            System.out.println("Boom chaka laka");
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+	
 	public static KfzKaufvertrag readKfzKaufvertrag(int id) {
 
 		try {

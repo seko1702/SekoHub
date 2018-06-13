@@ -35,38 +35,39 @@ public class Main {
 //		jp.setFirmenname("Contract GANG");		
 //		Database.writePartei(jp);
 
-		Fahrzeug fz = new Fahrzeug();
-		fz.setTyp("test");
-		fz.setModell("test");
-		ArrayList<String> temp = new ArrayList<>();
-		temp.addAll(Arrays.asList("Rechter Kotflügel Hinten Neu","Linker Kotflügel  Hinten Neu"));
-		fz.setZusatzAusstattung(temp);
-
-		KfzKaufvertrag kv = new KfzKaufvertrag();
-		Partei p1 =  Database.readPartei("Max", "Mustermann");	
-		Partei p2 = Database.readPartei("Contract GANG");
-		kv.setPartei1(p1);
-		kv.setPartei2(p2);
-		
-		temp.clear();
-		temp.addAll(Arrays.asList("Rechter Kotflügel Hinten Neu","Linker Kotflügel  Hinten Neu"));
-		kv.setListeUnfallschaeden(temp);
-		
-		kv.setBezeichnung("TEst");		
-		kv.setAlleinigesEigentum(true);
-		kv.setKaufpreis(45000);
-		kv.setAnzahlSchluessel(2);
-		
-		temp.clear();
-		temp.addAll(Arrays.asList("Sitze vorne gerissen","Licht rechts vorne kaputt"));
-		kv.setBeschaedigungen(temp);
-		temp.clear();
-		temp.addAll(Arrays.asList("15% Anzahlung","5 Tage Ummeldung"));
-		kv.setSondervereinbarungen(temp);
-		
-		Database.wirteKfzKaufvertrag(kv, fz);
+//		Fahrzeug fz = new Fahrzeug();
+//		fz.setTyp("test");
+//		fz.setModell("test");
+//		ArrayList<String> temp = new ArrayList<>();
+//		temp.addAll(Arrays.asList("Rechter Kotflügel Hinten Neu","Linker Kotflügel  Hinten Neu"));
+//		fz.setZusatzAusstattung(temp);
+//
+//		KfzKaufvertrag kv = new KfzKaufvertrag();
+//		Partei p1 =  Database.readPartei("Max", "Mustermann");	
+//		Partei p2 = Database.readPartei("Contract GANG");
+//		kv.setPartei1(p1);
+//		kv.setPartei2(p2);
+//		
+//		temp.clear();
+//		temp.addAll(Arrays.asList("Rechter Kotflügel Hinten Neu","Linker Kotflügel  Hinten Neu"));
+//		kv.setListeUnfallschaeden(temp);
+//		
+//		kv.setBezeichnung("TEst");
+//		kv.setAlleinigesEigentum(true);
+//		kv.setKaufpreis(45000);
+//		kv.setAnzahlSchluessel(2);
+//		
+//		temp.clear();
+//		temp.addAll(Arrays.asList("Sitze vorne gerissen","Licht rechts vorne kaputt"));
+//		kv.setBeschaedigungen(temp);
+//		temp.clear();
+//		temp.addAll(Arrays.asList("15% Anzahlung","5 Tage Ummeldung"));
+//		kv.setSondervereinbarungen(temp);
+//		
+//		Database.wirteKfzKaufvertrag(kv, fz);
 							
-//		KfzKaufvertrag kv2 = Database.readKfzKaufvertrag(41);
+		KfzKaufvertrag kv2 = Database.readKfzKaufvertrag("TEst");
+		System.out.println(kv2.getAnzahlSchluessel());
 
 	}
 }

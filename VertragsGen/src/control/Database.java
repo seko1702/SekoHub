@@ -265,7 +265,7 @@ public class Database {
 			vertrag.setBezeichnung(bezeichnung);
 			vertrag.setPartei1(readPartei(rsVertrag.getInt("ParteiEins_ID")));
 			vertrag.setPartei2(readPartei(rsVertrag.getInt("ParteiZwei_ID")));
-//			vertrag.setFahrzeug(fahrzeug);
+			vertrag.setFahrzeug(readFahrzeug(id));
 			vertrag.setAlleinigesEigentum(intToBoolean(rsVertrag.getInt("alleinigesEigentum")));
 			vertrag.setAustauschmotor(intToBoolean(rsVertrag.getInt("austauschmotor")));
 			vertrag.setAustauschmotorLaufleistung(rsVertrag.getInt("austauschmotorLaufleistung"));
@@ -280,9 +280,9 @@ public class Database {
 			vertrag.setKaufpreis(rsVertrag.getInt("kaufpreis"));
 			vertrag.setAnzahlung(rsVertrag.getInt("anzahlung"));
 			
-			vertrag.setListeUnfallschaeden(readArrayListCols(id, "unfallschaeden"));
-			vertrag.setBeschaedigungen(readArrayListCols(id, "beschaedigungen"));
-			vertrag.setSondervereinbarungen(readArrayListCols(id, "sondervereinbarungen"));
+			vertrag.setListeUnfallschaeden(readArrayListCols("unfallschaeden", "KfzKaufvertrag_ID", id));
+			vertrag.setBeschaedigungen(readArrayListCols("beschaedigungen", "KfzKaufvertrag_ID", id));
+			vertrag.setSondervereinbarungen(readArrayListCols("sondervereinbarungen", "KfzKaufvertrag_ID", id));
 			
 			conn.close();
 			return vertrag;
@@ -293,22 +293,20 @@ public class Database {
 
 	}
 
-	public static ArrayList<String> readArrayListCols(int id, String tabellenName) {
+	public static ArrayList<String> readArrayListCols(String tabellenName, String spaltenname, int id) {
 
 		conn = DatabaseCon.connect();
 		Statement sta;
 		try {
 			sta = conn.createStatement();
-			String queryUnfall = "select * from " + tabellenName + " where KfzKaufvertrag_ID=" + id;
+			String queryUnfall = "select * from " + tabellenName + " where "+ spaltenname +" = "+ id;
 			ResultSet rsUnfall = sta.executeQuery(queryUnfall);
 			ArrayList<String> unfallschaeden = new ArrayList<>();
 
 			while (rsUnfall.next()) {
-
 				unfallschaeden.add(rsUnfall.getString("bezeichnung"));
-				System.out.println(rsUnfall.getString("bezeichnung"));
-
 			}
+			System.out.println("Array download succeeded!");
 			conn.close();
 			return unfallschaeden;
 		} catch (SQLException e) {
@@ -335,6 +333,7 @@ public class Database {
 				}
 				System.out.println("Array upload succeeded!");
 			}
+			conn.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -399,7 +398,7 @@ public class Database {
 			fz.setCoZweiEffizienz(rs.getString("coZweiEffizienz"));
 			fz.setAmtlichesKennzeichen(rs.getString("amtlichesKennzeichen"));
 			fz.setErstzulassung(stringToDate(rs.getString("erstzulassung")));
-			fz.setZusatzAusstattung(zusatzAusstattung);
+			fz.setZusatzAusstattung(readArrayListCols("ZusatzAusstattung", "Fahrzeug_ID", id));
 			fz.setAnzahlVorbesitzer(rs.getInt("anzahlVorbesitzer"));
 			fz.setGewerbNutzung(intToBoolean(rs.getInt("gewerbNutzung")));
 			

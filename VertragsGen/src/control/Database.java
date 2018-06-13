@@ -89,7 +89,73 @@ public class Database {
 			String query = "select * from Partei where vorname ='"+ vorname +"' and name = '"+ name +"';";
 			ResultSet rs = sta.executeQuery(query);
 			
-			if(rs.getString("ParteiArt") == "NatürlichePartei") {
+			NatuerlichePartei np = new NatuerlichePartei();
+
+			np.setId(rs.getInt("Partei_ID"));
+			np.setStrasse(rs.getString("strasse"));
+			np.setHausnummer(rs.getInt("hausnummer"));
+			np.setHausnummerZusatz(rs.getString("hausnummerZusatz"));
+			np.setPlz(rs.getInt("plz"));
+			np.setOrt(rs.getString("ort"));
+			np.setTelnummer(rs.getInt("telefonnummer"));
+			np.setName(rs.getString("name"));
+			np.setVorname(rs.getString("vorname"));
+			np.setPersonalausweisNr(rs.getString("personalausweisNr"));
+			np.setAusstellungsbehoerde(rs.getString("austellungsbehoerde"));
+			np.setAusstellungsdatum(stringToDate(rs.getString("austellungsdatum")));
+			np.setGeburtsdatum(stringToDate(rs.getString("geburtsdatum")));
+
+			System.out.println("Partei download succeeded!");
+			conn.close();
+
+			return np;
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	public static Partei readPartei(String firmenname) {
+		
+		try {
+			conn = DatabaseCon.connect();
+			Statement sta = conn.createStatement();
+
+			String query = "select * from Partei where firmenname ='"+ firmenname +"';";
+			ResultSet rs = sta.executeQuery(query);
+		
+			JuristischePartei jp = new JuristischePartei();
+	
+			jp.setId(rs.getInt("Partei_ID"));
+			jp.setStrasse(rs.getString("strasse"));
+			jp.setHausnummer(rs.getInt("hausnummer"));
+			jp.setHausnummerZusatz(rs.getString("hausnummerZusatz"));
+			jp.setPlz(rs.getInt("plz"));
+			jp.setOrt(rs.getString("ort"));
+			jp.setTelnummer(rs.getInt("telefonnummer"));
+			jp.setFirmenname(rs.getString("firmenname"));
+			jp.setHandelsregister(rs.getString("handelsregister"));
+	
+			System.out.println("Partei download succeeded!");
+			conn.close();
+			return jp;
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}	
+	}
+	
+	public static Partei readPartei(int id) {		
+		try {
+			conn = DatabaseCon.connect();
+			Statement sta = conn.createStatement();
+
+			String query = "select * from Partei where Partei_ID ="+ id +";";
+			ResultSet rs = sta.executeQuery(query);
+		
+			if(rs.getString("ParteiArt").equals("NatürlichePartei")) {
 				NatuerlichePartei np = new NatuerlichePartei();
 
 				np.setId(rs.getInt("Partei_ID"));
@@ -111,9 +177,9 @@ public class Database {
 
 				return np;
 			}
-			else if(rs.getString("ParteiArt") == "JuristischePartei") {
+			else if(rs.getString("ParteiArt").equals("JuristischePartei")) {
 				JuristischePartei jp = new JuristischePartei();
-
+		
 				jp.setId(rs.getInt("Partei_ID"));
 				jp.setStrasse(rs.getString("strasse"));
 				jp.setHausnummer(rs.getInt("hausnummer"));
@@ -123,23 +189,22 @@ public class Database {
 				jp.setTelnummer(rs.getInt("telefonnummer"));
 				jp.setFirmenname(rs.getString("firmenname"));
 				jp.setHandelsregister(rs.getString("handelsregister"));
-
+		
 				System.out.println("Partei download succeeded!");
 				conn.close();
-
 				return jp;
 			}
 			else {
-				System.out.println("Invalid Partei Art");
+				System.out.println("invalid ParteiArt");	
 				return null;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
-		}
+		}	
 	}
 
-	public static void wirteKfzKaufvertrag(KfzKaufvertrag vertrag, Fahrzeug fahrzeug, Partei p1, Partei p2) {
+	public static void wirteKfzKaufvertrag(KfzKaufvertrag vertrag, Fahrzeug fahrzeug) {
 		
 		writeFahrzeug(fahrzeug);
 
@@ -160,12 +225,11 @@ public class Database {
 
             ResultSet fID= sta.executeQuery("SELECT seq FROM sqlite_sequence WHERE name = 'Fahrzeug'");
             int fahrzeugID = fID.getInt(1);
+            
+            int partei1ID= vertrag.getPartei1().getId();
+            int partei2ID= vertrag.getPartei2().getId();
 
-            ResultSet kID= sta.executeQuery("SELECT seq FROM sqlite_sequence WHERE name = 'Partei'");
-            int partei1ID= kID.getInt(1);
-            int partei2ID= partei1ID-1;
-
-            String sql1 = "insert into KfzKaufvertrag values (null, "+fahrzeugID+", "+partei1ID+", "+partei2ID+","
+            String sql1 = "insert into KfzKaufvertrag values (null, "+fahrzeugID+", "+partei1ID+", "+partei2ID+", '"+ vertrag.getBezeichnung() +"',"
                     + booleanToInt(vertrag.isAlleinigesEigentum()) + "," + booleanToInt(vertrag.isAustauschmotor()) + ","
                     + vertrag.getAustauschmotorLaufleistung() + "," + booleanToInt(vertrag.isUnfallschaden()) + ","
                     + booleanToInt(vertrag.isUmmeldungUnverzueglich()) + ","
@@ -176,7 +240,7 @@ public class Database {
 
             sta.executeUpdate(sql1);
 
-            System.out.println("Fahrzeug Attribute download succeeded!");
+            System.out.println("Fahrzeug Attribute upload succeeded!");
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -185,18 +249,23 @@ public class Database {
 
     }
 	
-	public static KfzKaufvertrag readKfzKaufvertrag(int id) {
+	public static KfzKaufvertrag readKfzKaufvertrag(String bezeichnung) {
 
 		try {
 
 			conn = DatabaseCon.connect();
 			Statement sta = conn.createStatement();
-			String query = "select * from KfzKaufvertrag where KfzKaufvertrag_ID=" + id;
+			String query = "select * from KfzKaufvertrag where bezeichnung='" + bezeichnung +"';";
 			ResultSet rsVertrag = sta.executeQuery(query);
 
 			KfzKaufvertrag vertrag = new KfzKaufvertrag();
-
+			int id = rsVertrag.getInt("KfzKaufvertrag_ID");
+			
 			vertrag.setId(id);
+			vertrag.setBezeichnung(bezeichnung);
+			vertrag.setPartei1(readPartei(rsVertrag.getInt("ParteiEins_ID")));
+			vertrag.setPartei2(readPartei(rsVertrag.getInt("ParteiZwei_ID")));
+//			vertrag.setFahrzeug(fahrzeug);
 			vertrag.setAlleinigesEigentum(intToBoolean(rsVertrag.getInt("alleinigesEigentum")));
 			vertrag.setAustauschmotor(intToBoolean(rsVertrag.getInt("austauschmotor")));
 			vertrag.setAustauschmotorLaufleistung(rsVertrag.getInt("austauschmotorLaufleistung"));
@@ -210,15 +279,14 @@ public class Database {
 			vertrag.setAnzahlSchluessel(rsVertrag.getInt("anzahlSchluessel"));
 			vertrag.setKaufpreis(rsVertrag.getInt("kaufpreis"));
 			vertrag.setAnzahlung(rsVertrag.getInt("anzahlung"));
-
+			
 			vertrag.setListeUnfallschaeden(readArrayListCols(id, "unfallschaeden"));
 			vertrag.setBeschaedigungen(readArrayListCols(id, "beschaedigungen"));
 			vertrag.setSondervereinbarungen(readArrayListCols(id, "sondervereinbarungen"));
-
+			
 			conn.close();
 			return vertrag;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -309,6 +377,39 @@ public class Database {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public static Fahrzeug readFahrzeug(int id) {
+		try {
+			conn = DatabaseCon.connect();
+			Statement sta = conn.createStatement();
+			String query = "select * from Fahrzeug where Fahrzeug_ID ="+ id +";";
+			ResultSet rs = sta.executeQuery(query);
+			
+			Fahrzeug fz = new Fahrzeug();
+			fz.setTyp(rs.getString("typ"));
+			fz.setMarke(rs.getString("marke"));
+			fz.setModell(rs.getString("modell"));
+			fz.setFahrzeugIdNr(rs.getInt("fahrzeugIdNr"));
+			fz.setFahrzeugbriefNr(rs.getInt("fahrzeugbriefNr"));
+			fz.setGesamtFahrLeistung(rs.getInt("gesamtFahrLeistung"));
+			fz.setPs(rs.getInt("ps"));
+			fz.setHubraum(rs.getInt("hubraum"));
+			fz.setNaechsteHauptuntersuchung(stringToDate(rs.getString("naechsteHauptuntersuchung")));
+			fz.setCoZweiEffizienz(rs.getString("coZweiEffizienz"));
+			fz.setAmtlichesKennzeichen(rs.getString("amtlichesKennzeichen"));
+			fz.setErstzulassung(stringToDate(rs.getString("erstzulassung")));
+			fz.setZusatzAusstattung(zusatzAusstattung);
+			fz.setAnzahlVorbesitzer(rs.getInt("anzahlVorbesitzer"));
+			fz.setGewerbNutzung(intToBoolean(rs.getInt("gewerbNutzung")));
+			
+			return fz;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}	
+
+		
 	}
 	
 	public void writeMietvertrag(Mietvertrag mv) {
@@ -440,7 +541,8 @@ public class Database {
 		
 	}
 	public static Date stringToDate(String date) {
-		if(!(date == null)) {
+		if(!"null".equals(date)) {
+			System.out.println("String");
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			try {
 				Date date1 = df.parse(date);
@@ -449,7 +551,7 @@ public class Database {
 				System.out.println(e.getMessage());
 				return null;
 			}
-		}
+		} 
 		else {
 			return null;
 		}

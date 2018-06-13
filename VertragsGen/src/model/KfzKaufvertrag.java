@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class KfzKaufvertrag extends Vertrag {
 	
-	private int id; 
 	private Fahrzeug fahrzeug;
 	private boolean alleinigesEigentum;
 	private boolean austauschmotor;
@@ -23,12 +22,6 @@ public class KfzKaufvertrag extends Vertrag {
 	private int kaufpreis;
 	private int anzahlung;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public Fahrzeug getFahrzeug() {
 		return fahrzeug;
 	}

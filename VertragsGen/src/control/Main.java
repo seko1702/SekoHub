@@ -4,6 +4,8 @@ import model.NatuerlichePartei;
 import model.Partei;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import model.Fahrzeug;
 import model.JuristischePartei;
 import model.KfzKaufvertrag;
@@ -12,19 +14,15 @@ import model.NatuerlichePartei;
 public class Main {
 
 	public static void main(String[] args) {
-
-		Partei p =  Database.readPartei("Hans", "sad");
-		System.out.println(p.getId());
-		
+	
 //		NatuerlichePartei np = new NatuerlichePartei();
-//		np.setStrasse("s");
+//		np.setStrasse("strasse");
 //		np.setHausnummer(1);
-//		np.setHausnummerZusatz("1a");
+//		np.setHausnummerZusatz("a");
 //		np.setOrt("Berlin");
-//		np.setTelnummer(1234);
-//		np.setName("Hans");
-//		np.setVorname("sad");
-//
+//		np.setTelnummer(123456789);
+//		np.setName("Mustermann");
+//		np.setVorname("Max");
 //		Database.writePartei(np);
 //		
 //		JuristischePartei jp = new JuristischePartei();
@@ -34,42 +32,40 @@ public class Main {
 //		jp.setOrt("Berlin");
 //		jp.setTelnummer(1234);
 //		jp.setHandelsregister("testHandelsregsiter");
-//		
+//		jp.setFirmenname("Contract GANG");		
 //		Database.writePartei(jp);
-//		
-//		Fahrzeug fz = new Fahrzeug();
-//		fz.setTyp("sdf");
-//		fz.setModell("Test");
-//		ArrayList<String> zusatz = new ArrayList<>();
-//		zusatz.add("Rechter Kotflügel Hinten Neu");
-//		zusatz.add("Linker Kotflügel  Hinten Neu");
-//		fz.setZusatzAusstattung(zusatz);
-//		
-//		Database.writeFahrzeug(fz);
-//			
-//		KfzKaufvertrag kv = new KfzKaufvertrag();
-//		
-//		kv.setAlleinigesEigentum(true);
-//		kv.setKaufpreis(45000);
-//		kv.setAnzahlSchluessel(2);
-//		
-//		ArrayList<String> unfallschaeden = new ArrayList<>();
-//		unfallschaeden.add("Rechter Kotflügel Hinten Neu");
-//		unfallschaeden.add("Linker Kotflügel  Hinten Neu");
-//		kv.setListeUnfallschaeden(unfallschaeden);
-//		
-//		ArrayList<String> beschaedigungen = new ArrayList<>();
-//		beschaedigungen.add("Sitze vorne gerissen");
-//		beschaedigungen.add("Licht rechts vorne kaputt");
-//		kv.setBeschaedigungen(beschaedigungen);
-//		
-//		ArrayList<String> sondervereinbarung = new ArrayList<>();
-//		sondervereinbarung.add("15% Anzahlung");
-//		sondervereinbarung.add("5 Tage Ummeldung");
-//		kv.setSondervereinbarungen(sondervereinbarung);
-//		
-//		Database.wirteKfzKaufvertrag(kv, fz, np, jp);
-//							
+
+		Fahrzeug fz = new Fahrzeug();
+		fz.setTyp("test");
+		fz.setModell("test");
+		ArrayList<String> temp = new ArrayList<>();
+		temp.addAll(Arrays.asList("Rechter Kotflügel Hinten Neu","Linker Kotflügel  Hinten Neu"));
+		fz.setZusatzAusstattung(temp);
+
+		KfzKaufvertrag kv = new KfzKaufvertrag();
+		Partei p1 =  Database.readPartei("Max", "Mustermann");	
+		Partei p2 = Database.readPartei("Contract GANG");
+		kv.setPartei1(p1);
+		kv.setPartei2(p2);
+		
+		temp.clear();
+		temp.addAll(Arrays.asList("Rechter Kotflügel Hinten Neu","Linker Kotflügel  Hinten Neu"));
+		kv.setListeUnfallschaeden(temp);
+		
+		kv.setBezeichnung("TEst");		
+		kv.setAlleinigesEigentum(true);
+		kv.setKaufpreis(45000);
+		kv.setAnzahlSchluessel(2);
+		
+		temp.clear();
+		temp.addAll(Arrays.asList("Sitze vorne gerissen","Licht rechts vorne kaputt"));
+		kv.setBeschaedigungen(temp);
+		temp.clear();
+		temp.addAll(Arrays.asList("15% Anzahlung","5 Tage Ummeldung"));
+		kv.setSondervereinbarungen(temp);
+		
+		Database.wirteKfzKaufvertrag(kv, fz);
+							
 //		KfzKaufvertrag kv2 = Database.readKfzKaufvertrag(41);
 
 	}

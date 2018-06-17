@@ -9,6 +9,8 @@ import java.util.Arrays;
 import model.Fahrzeug;
 import model.JuristischePartei;
 import model.KfzKaufvertrag;
+import model.Mietobjekt;
+import model.Mietvertrag;
 import model.NatuerlichePartei;
 
 public class Main {
@@ -65,6 +67,21 @@ public class Main {
 //		kv.setSondervereinbarungen(temp);
 //		
 //		Database.wirteKfzKaufvertrag(kv, fz);
+		
+//		Mietobjekt mo = new Mietobjekt();
+//		mo.setStrasse("Musterstrasse");
+//		mo.setOrt("Berlin");
+//		mo.setPlz(34566);
+//		mo.setAnzahlKuechen(5);
+//		mo.setEtage(2);
+//		
+//		Mietvertrag mv = new Mietvertrag();
+//		mv.setPartei1(Database.readPartei("Max", "Mustermann"));
+//		mv.setPartei2(Database.readPartei("Contract GANG"));
+//		mv.setMonatsMiete(3245);
+//		mv.setPreisgebunden(true);
+//		
+//		Database.writeMietvertrag(mv, mo);
 							
 		KfzKaufvertrag kv2 = Database.readKfzKaufvertrag("TEst");
 		System.out.println(kv2.getAnzahlSchluessel());

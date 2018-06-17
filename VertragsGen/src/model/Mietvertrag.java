@@ -3,9 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Mietvertrag {
+public class Mietvertrag extends Vertrag {
 	
-	private int id; 
 	private Mietobjekt mietobjekt;
 	private Date mietbeginn;
 	private Date mietende;
@@ -37,12 +36,6 @@ public class Mietvertrag {
 	private boolean betriebskostenEntwaesserungMuellabfuhrWasserversorgung;
 	private Date abrechnungszeitraumHeizUndBetriebskosten;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public Mietobjekt getMietobjekt() {
 		return mietobjekt;
 	}

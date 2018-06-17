@@ -7,34 +7,52 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.5" layoutY="128.0" prefHeight="288.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <ListView layoutX="91.0" layoutY="62.0" prefHeight="224.0" prefWidth="642.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
-                  <Label layoutX="253.0" styleClass="title-label" text="Verträge" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="252.0" AnchorPane.topAnchor="10.0">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="603.0" mnemonicParsing="false" styleClass="icon-button" text="+" textAlignment="CENTER" textFill="#19ae4d" AnchorPane.bottomAnchor="890.0" AnchorPane.leftAnchor="903.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Button>
+                  <ListView layoutX="91.0" layoutY="62.0" prefHeight="224.0" prefWidth="642.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0" />
+                  <AnchorPane layoutX="53.0" layoutY="10.0" prefHeight="102.0" prefWidth="642.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label styleClass="title-label" text="Verträge" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <ToolBar layoutX="442.0" layoutY="-1.0" prefHeight="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <Button mnemonicParsing="false" text="Edit" />
+                              <Button mnemonicParsing="false" text="Add" />
+                          </items>
+                        </ToolBar>
+                        <TextField layoutY="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0" />
+                        <Button layoutX="564.0" layoutY="62.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" text="S" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <ListView layoutX="64.0" layoutY="62.0" prefHeight="224.0" prefWidth="641.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0" />
-                  <Label layoutX="256.0" layoutY="1.0" text="Parteien" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="10.0">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
+                  <ListView layoutX="64.0" layoutY="62.0" prefHeight="224.0" prefWidth="641.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0" />
+                  <AnchorPane prefHeight="102.0" prefWidth="642.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label styleClass="title-label" text="Pateien" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <ToolBar layoutX="442.0" layoutY="-1.0" prefHeight="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <Button mnemonicParsing="false" text="Edit" />
+                              <Button mnemonicParsing="false" text="Add" />
+                           </items>
+                        </ToolBar>
+                        <TextField layoutY="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0" />
+                        <Button layoutX="564.0" layoutY="62.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" text="S" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
         </items>

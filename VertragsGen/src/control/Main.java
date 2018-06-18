@@ -3,9 +3,15 @@ package control;
 import model.NatuerlichePartei;
 import model.Partei;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.Fahrzeug;
 import model.JuristischePartei;
 import model.KfzKaufvertrag;
@@ -13,7 +19,7 @@ import model.Mietobjekt;
 import model.Mietvertrag;
 import model.NatuerlichePartei;
 
-public class Main {
+public class Main extends Application  {
 
 	public static void main(String[] args) {
 	
@@ -83,8 +89,21 @@ public class Main {
 //		
 //		Database.writeMietvertrag(mv, mo);
 							
-		KfzKaufvertrag kv2 = Database.readKfzKaufvertrag("TEst");
-		System.out.println(kv2.getAnzahlSchluessel());
+//		KfzKaufvertrag kv2 = Database.readKfzKaufvertrag("TEst");
+//		System.out.println(kv2.getAnzahlSchluessel());
 
+		launch(args);
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws IOException{
+
+		Parent root = FXMLLoader.load(getClass().getResource("/view/Startseite.fxml"));
+		
+		Scene scene = new Scene(root);
+		primaryStage.setTitle("Vertragsgenerator");
+		primaryStage.setScene(scene);
+		primaryStage.sizeToScene();
+		primaryStage.show();
 	}
 }

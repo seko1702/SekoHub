@@ -7,28 +7,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane stylesheets="@../../Ressource/css/material-fx-v0_3.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="control.StartseiteController">
    <children>
-      <SplitPane dividerPositions="0.5" layoutY="128.0" prefHeight="288.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <SplitPane dividerPositions="0.5" layoutY="128.0" prefHeight="288.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <ListView layoutX="91.0" layoutY="62.0" prefHeight="224.0" prefWidth="642.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0" />
-                  <AnchorPane layoutX="53.0" layoutY="10.0" prefHeight="102.0" prefWidth="642.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane layoutX="53.0" layoutY="10.0" prefHeight="102.0" prefWidth="642.0" style="-fx-background-color: #BBDEFB;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label styleClass="title-label" text="Verträge" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
+                        <Label styleClass="title-label" text="Verträge" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <ToolBar layoutX="442.0" layoutY="-1.0" prefHeight="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ToolBar layoutX="442.0" layoutY="-1.0" prefHeight="70.0" style="-fx-background-color: #BBDEFB;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
-                            <Button mnemonicParsing="false" text="Edit" />
-                              <Button mnemonicParsing="false" text="Add" />
+                            <Button mnemonicParsing="false" prefHeight="40.0" styleClass="edit-button" />
+                              <Button mnemonicParsing="false" styleClass="delete-button" />
+                              <Button fx:id="addVertragBtn" mnemonicParsing="false" styleClass="add-button" />
                           </items>
                         </ToolBar>
-                        <TextField layoutY="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0" />
-                        <Button layoutX="564.0" layoutY="62.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" text="S" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                        <TextField layoutY="70.0" promptText="search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+                        <Button layoutX="564.0" layoutY="62.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" styleClass="search-button" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -36,28 +37,29 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
                   <ListView layoutX="64.0" layoutY="62.0" prefHeight="224.0" prefWidth="641.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="102.0" />
-                  <AnchorPane prefHeight="102.0" prefWidth="642.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane layoutX="63.0" layoutY="20.0" prefHeight="102.0" prefWidth="642.0" style="-fx-background-color: #BBDEFB;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label styleClass="title-label" text="Pateien" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
+                        <Label styleClass="title-label" text="Parteien" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <ToolBar layoutX="442.0" layoutY="-1.0" prefHeight="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ToolBar layoutX="442.0" layoutY="-1.0" prefHeight="70.0" style="-fx-background-color: #BBDEFB;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <items>
-                              <Button mnemonicParsing="false" text="Edit" />
-                              <Button mnemonicParsing="false" text="Add" />
+                              <Button mnemonicParsing="false" prefHeight="40.0" styleClass="edit-button" />
+                              <Button mnemonicParsing="false" styleClass="delete-button" />
+                              <Button fx:id="addParteiBtn" mnemonicParsing="false" onAction="#addParteiBtnPressed" styleClass="add-button" />
                            </items>
                         </ToolBar>
-                        <TextField layoutY="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="60.0" />
-                        <Button layoutX="564.0" layoutY="62.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" text="S" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                        <TextField layoutY="70.0" promptText="search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" />
+                        <Button layoutX="564.0" layoutY="62.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" styleClass="search-button" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
                      </children>
                   </AnchorPane>
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
-      <MenuBar minHeight="32.0" prefHeight="32.0" prefWidth="1295.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

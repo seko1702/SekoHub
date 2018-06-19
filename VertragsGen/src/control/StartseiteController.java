@@ -21,6 +21,7 @@ public class StartseiteController {
 		Stage window = (Stage)((Node) event.getSource()).getScene().getWindow();
 		
 		window.setScene(scene);
+		window.setMaximized(true);
 		window.show();
 	}
 }

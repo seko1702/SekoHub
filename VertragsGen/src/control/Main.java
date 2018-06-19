@@ -103,7 +103,7 @@ public class Main extends Application  {
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("Vertragsgenerator");
 		primaryStage.setScene(scene);
-		primaryStage.sizeToScene();
+		primaryStage.setFullScreen(true);
 		primaryStage.show();
 	}
 }

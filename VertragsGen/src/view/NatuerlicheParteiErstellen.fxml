@@ -27,17 +27,51 @@
           </Menu>
         </menus>
       </MenuBar>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-         <center>
-            <GridPane hgap="20.0" maxWidth="787.0" minWidth="700.0" prefHeight="575.0" prefWidth="787.0" vgap="10.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="120.0" prefWidth="1232.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="340.0" style="-fx-background-color: #BBDEFB;" text="Neue Partei erstellen:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <SplitPane dividerPositions="0.5" prefHeight="94.0" prefWidth="1230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="62.0" prefWidth="558.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Label alignment="CENTER" minWidth="400.0" prefHeight="62.0" prefWidth="361.0" text="Parteiart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="62.0" prefWidth="627.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <ComboBox minWidth="400.0" prefHeight="62.0" prefWidth="857.0" promptText="Selc" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <StackPane prefHeight="654.0" prefWidth="1232.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="144.0">
+         <children>
+            <GridPane hgap="20.0" maxWidth="787.0" minWidth="700.0" prefHeight="575.0" prefWidth="787.0" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="230.0" prefWidth="230.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="230.0" prefWidth="150.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="230.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -49,108 +83,86 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label prefHeight="39.0" prefWidth="290.0" text="Parteiart">
+                  <Label prefHeight="39.0" prefWidth="307.0" text="Name">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="25.0" prefWidth="291.0" promptText="Selc" GridPane.columnIndex="1" />
-                  <Label prefHeight="39.0" prefWidth="307.0" text="Name" GridPane.rowIndex="1">
+                  <TextField prefHeight="25.0" prefWidth="346.0" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="276.0" text="Abbrechen" GridPane.rowIndex="10" />
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Vorname" GridPane.rowIndex="1">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="346.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" prefHeight="59.0" prefWidth="276.0" text="Abbrechen" GridPane.rowIndex="11" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Vorname" GridPane.rowIndex="2">
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label prefHeight="39.0" prefWidth="389.0" text="Personalausweis&#13;Nummer" textAlignment="JUSTIFY" GridPane.rowIndex="7">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label prefHeight="39.0" prefWidth="389.0" text="Personalausweis&#13;Nummer" textAlignment="JUSTIFY" GridPane.rowIndex="8">
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Geburtsdatum" GridPane.rowIndex="2">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Geburtsdatum" GridPane.rowIndex="3">
+                  <DatePicker prefHeight="25.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Straße" GridPane.rowIndex="3">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <DatePicker prefHeight="25.0" prefWidth="294.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Straße" GridPane.rowIndex="4">
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Hausnummer" GridPane.rowIndex="4">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Hausnummer" GridPane.rowIndex="5">
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Zusatz" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Postleitzahl" GridPane.rowIndex="5">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Zusatz" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Ort" GridPane.columnIndex="2" GridPane.rowIndex="5">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
                   <TextField GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Postleitzahl" GridPane.rowIndex="6">
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Telefonnummer" GridPane.rowIndex="6">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Ausstellungsbehörde" GridPane.rowIndex="8">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label prefHeight="39.0" prefWidth="342.0" text="Ausstellungsdatum" GridPane.rowIndex="9">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <DatePicker prefHeight="25.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="271.0" text="Speichern" GridPane.columnIndex="3" GridPane.rowIndex="10" />
                   <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Ort" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Telefonnummer" GridPane.rowIndex="7">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Ausstellungsbehörde" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <Label prefHeight="39.0" prefWidth="342.0" text="Ausstellungsdatum" GridPane.rowIndex="10">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <DatePicker prefHeight="25.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                  <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="271.0" text="Speichern" GridPane.columnIndex="3" GridPane.rowIndex="11" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
             </GridPane>
-         </center>
-         <left>
-            <Pane minWidth="200.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #BBDEFB;" BorderPane.alignment="CENTER" />
-         </left>
-         <right>
-            <Pane minWidth="200.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #BBDEFB;" BorderPane.alignment="CENTER" />
-         </right>
-         <top>
-            <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <Label alignment="CENTER" prefHeight="53.0" prefWidth="340.0" style="-fx-background-color: #BBDEFB;" text="Neue Partei erstellen:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </top>
-      </BorderPane>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
